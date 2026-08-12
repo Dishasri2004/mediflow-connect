@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "../components/mf/SiteHeader";
-import { LanguageProvider } from "../lib/i18n";
+import { LanguageProvider, useLang } from "../lib/i18n";
 import { BookingProvider } from "../lib/booking";
 
 function NotFoundComponent() {
