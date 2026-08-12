@@ -6,7 +6,7 @@ import { useLang } from "@/lib/i18n";
 import type { Doctor } from "@/lib/doctors";
 
 export function DoctorCard({ doctor }: { doctor: Doctor }) {
-  const { t } = useLang();
+  const { t, td } = useLang();
   const Icon = doctor.consultation === "Video consultation" ? Video : MapPin;
 
   return (
@@ -21,7 +21,7 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
         <div className="min-w-0">
           <h3 className="text-h2">{doctor.name}</h3>
           <p className="text-small text-muted-foreground">
-            {doctor.specialty} · {doctor.experience} years experience
+            {td(doctor.specialty)} · {doctor.experience} {t("yearsExperience")}
           </p>
         </div>
       </div>
@@ -29,19 +29,21 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
       <dl className="mt-4 grid gap-2 text-small">
         <div className="flex items-center gap-2">
           <Languages aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
-          <dt className="sr-only">Languages</dt>
-          <dd>{doctor.languages.join(" · ")}</dd>
+          <dt className="sr-only">{t("languagesLabel")}</dt>
+          <dd>{doctor.languages.map((l) => td(l)).join(" · ")}</dd>
         </div>
         <div className="flex items-center gap-2">
           <Icon aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
-          <dt className="sr-only">Consultation type</dt>
-          <dd>{doctor.consultation}</dd>
+          <dt className="sr-only">{t("consultationType")}</dt>
+          <dd>{td(doctor.consultation)}</dd>
         </div>
         <div className="flex items-center gap-2">
           <Clock aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
-          <dt className="sr-only">Next available</dt>
+          <dt className="sr-only">{t("nextAvailable")}</dt>
           <dd>
-            <Badge tone="success">Next available: {doctor.nextAvailable}</Badge>
+            <Badge tone="success">
+              {t("nextAvailablePrefix")} {td(doctor.nextAvailable)}
+            </Badge>
           </dd>
         </div>
       </dl>
