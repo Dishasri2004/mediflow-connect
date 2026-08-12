@@ -4,7 +4,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/mf/Button";
 import { ConnectionError } from "@/components/mf/ConnectionError";
 import { Steps } from "@/components/mf/Steps";
-import { formatFullDate, getDoctor } from "@/lib/doctors";
+import { getDoctor } from "@/lib/doctors";
 import { makeAppointmentId, useBooking } from "@/lib/booking";
 import { useLang } from "@/lib/i18n";
 
@@ -31,7 +31,7 @@ function Row({ label, value }: { label: string; value: string }) {
 
 function ReviewPage() {
   const { booking, update, hydrated } = useBooking();
-  const { t } = useLang();
+  const { t, td, formatDate } = useLang();
   const navigate = useNavigate();
   const [state, setState] = useState<"idle" | "saving" | "offline">("idle");
 
@@ -40,9 +40,9 @@ function ReviewPage() {
   if (hydrated && (!doctor || !booking.slot || !booking.fullName)) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-        <h1 className="text-h1">Let's finish the earlier steps</h1>
+        <h1 className="text-h1">{t("finishEarlierTitle")}</h1>
         <p className="mt-2 text-body text-muted-foreground">
-          We still need a doctor, a time and the patient's details before you can review the appointment.
+          {t("finishEarlierBody")}
         </p>
         <Button asChild className="mt-6">
           <Link to="/search">{t("findDoctor")}</Link>
@@ -70,15 +70,15 @@ function ReviewPage() {
         to="/book/details"
         className="inline-flex items-center gap-1.5 rounded-md text-small font-medium text-primary hover:underline"
       >
-        <ArrowLeft aria-hidden="true" className="size-4" /> Back to patient details
+        <ArrowLeft aria-hidden="true" className="size-4" /> {t("backToDetails")}
       </Link>
       <div className="mt-4">
         <Steps current={4} />
       </div>
 
-      <h1 className="text-h1">Please check these details</h1>
+      <h1 className="text-h1">{t("reviewTitle")}</h1>
       <p className="mt-1.5 text-body text-muted-foreground">
-        Nothing is booked yet. You can go back and change any answer.
+        {t("reviewSubtitle")}
       </p>
 
       {state === "offline" && (
@@ -88,14 +88,14 @@ function ReviewPage() {
       )}
 
       <dl className="mt-6 rounded-lg border border-border bg-card p-5 shadow-card">
-        <Row label="Doctor" value={`${doctor?.name} · ${doctor?.specialty}`} />
-        <Row label="Date" value={booking.dateKey ? formatFullDate(booking.dateKey) : "—"} />
-        <Row label="Time" value={booking.slot ?? "—"} />
-        <Row label="Type" value={doctor?.consultation ?? "—"} />
-        <Row label="Fee" value={doctor ? `₹${doctor.fee}` : "—"} />
-        <Row label="Patient" value={`${booking.fullName}, age ${booking.age}`} />
-        <Row label="Phone" value={booking.phone ?? "—"} />
-        <Row label="Reason" value={booking.reason ?? "—"} />
+        <Row label={t("doctorLabel")} value={`${doctor?.name} · ${td(doctor?.specialty ?? "")}`} />
+        <Row label={t("dateLabel")} value={booking.dateKey ? formatDate(booking.dateKey) : "—"} />
+        <Row label={t("timeLabel")} value={booking.slot ? td(booking.slot) : "—"} />
+        <Row label={t("typeLabel")} value={doctor ? td(doctor.consultation) : "—"} />
+        <Row label={t("feeLabel")} value={doctor ? `₹${doctor.fee}` : "—"} />
+        <Row label={t("patientLabel")} value={`${booking.fullName}, ${t("ageInline")} ${booking.age}`} />
+        <Row label={t("phoneLabel")} value={booking.phone ?? "—"} />
+        <Row label={t("reasonLabel")} value={booking.reason ?? "—"} />
       </dl>
 
       <div className="sticky bottom-0 mt-8 -mx-4 border-t border-border bg-surface/95 px-4 py-4 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 sm:backdrop-blur-none">
@@ -103,7 +103,7 @@ function ReviewPage() {
           {state === "saving" ? (
             <>
               <Loader2 aria-hidden="true" className="size-4 animate-spin" />
-              Booking your appointment…
+              {t("bookingNow")}
             </>
           ) : (
             t("confirm")
@@ -118,7 +118,7 @@ function ReviewPage() {
           className="mt-3 sm:mt-0 sm:ml-3"
           onClick={() => confirm(true)}
         >
-          Demo: confirm with a poor connection
+          {t("demoPoorConnection")}
         </Button>
       </div>
     </div>

@@ -22,7 +22,7 @@ export const Route = createFileRoute("/book/time")({
 
 function TimePage() {
   const { booking, update, hydrated } = useBooking();
-  const { t } = useLang();
+  const { t, td } = useLang();
   const navigate = useNavigate();
   const dates = useMemo(() => upcomingDates(6), []);
   const [error, setError] = useState<string | null>(null);
@@ -33,9 +33,9 @@ function TimePage() {
   if (hydrated && !doctor) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-        <h1 className="text-h1">Choose a doctor first</h1>
+        <h1 className="text-h1">{t("chooseDoctorFirst")}</h1>
         <p className="mt-2 text-body text-muted-foreground">
-          To pick a time, start by choosing the doctor you would like to see.
+          {t("chooseDoctorFirstBody")}
         </p>
         <Button asChild className="mt-6">
           <Link to="/search">{t("findDoctor")}</Link>
@@ -51,19 +51,19 @@ function TimePage() {
         params={{ doctorId: booking.doctorId ?? "" }}
         className="inline-flex items-center gap-1.5 rounded-md text-small font-medium text-primary hover:underline"
       >
-        <ArrowLeft aria-hidden="true" className="size-4" /> Back to profile
+        <ArrowLeft aria-hidden="true" className="size-4" /> {t("backToProfile")}
       </Link>
       <div className="mt-4">
         <Steps current={2} />
       </div>
 
-      <h1 className="text-h1">When would you like to be seen?</h1>
+      <h1 className="text-h1">{t("timeTitle")}</h1>
       <p className="mt-1.5 text-body text-muted-foreground">
-        {doctor?.name} · {doctor?.consultation}
+        {doctor?.name} · {td(doctor?.consultation ?? "")}
       </p>
 
       <section className="mt-7">
-        <h2 className="text-label text-muted-foreground">Choose a date</h2>
+        <h2 className="text-label text-muted-foreground">{t("chooseDate")}</h2>
         <ul className="mt-3 flex gap-2 overflow-x-auto pb-2">
           {dates.map((d) => {
             const selected = d.key === dateKey;
@@ -80,7 +80,7 @@ function TimePage() {
                       : "border-border-strong bg-surface hover:border-primary hover:bg-primary-soft",
                   )}
                 >
-                  <span className="text-small font-semibold">{d.weekday}</span>
+                  <span className="text-small font-semibold">{td(d.weekday)}</span>
                   <span className="text-h2">{d.day}</span>
                   <span className="text-small">{d.month}</span>
                 </button>
@@ -91,7 +91,7 @@ function TimePage() {
       </section>
 
       <section className="mt-6">
-        <h2 className="text-label text-muted-foreground">Choose a time</h2>
+        <h2 className="text-label text-muted-foreground">{t("chooseTime")}</h2>
         <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {timeSlots.map((slot) => {
             const available = slotAvailability(booking.doctorId ?? "", dateKey, slot);
@@ -118,16 +118,16 @@ function TimePage() {
                 >
                   {selected && <Check aria-hidden="true" className="size-4" />}
                   {!available && <Ban aria-hidden="true" className="size-4" />}
-                  <span>{slot}</span>
-                  {!available && <span className="sr-only">Unavailable</span>}
-                  {selected && <span className="sr-only">Selected</span>}
+                  <span>{td(slot)}</span>
+                  {!available && <span className="sr-only">{t("slotUnavailable")}</span>}
+                  {selected && <span className="sr-only">{t("slotSelected")}</span>}
                 </button>
               </li>
             );
           })}
         </ul>
         <p className="mt-3 text-small text-muted-foreground">
-          Crossed-out times with a “no entry” icon are already taken. Selected times are marked with a tick.
+          {t("slotLegend")}
         </p>
       </section>
 
@@ -144,7 +144,7 @@ function TimePage() {
           className="sm:w-auto"
           onClick={() => {
             if (!booking.slot) {
-              setError("Choose a time slot to continue. Times marked with a tick are selected.");
+              setError(t("slotError"));
               return;
             }
             update({ dateKey });

@@ -4,6 +4,7 @@ import { Search as SearchIcon, ArrowLeft } from "lucide-react";
 import { Chip } from "@/components/mf/Chip";
 import { DoctorCard } from "@/components/mf/DoctorCard";
 import { Steps } from "@/components/mf/Steps";
+import { useLang } from "@/lib/i18n";
 import { doctors, languages, specialties, type Specialty } from "@/lib/doctors";
 
 type SearchParams = {
@@ -38,6 +39,7 @@ function SearchPage() {
   const params = Route.useSearch();
   const navigate = useNavigate({ from: "/search" });
   const [query, setQuery] = useState(params.q ?? "");
+  const { t, td } = useLang();
 
   const setFilter = (patch: Partial<SearchParams>) =>
     navigate({ search: (prev) => ({ ...prev, ...patch }) });
@@ -57,14 +59,14 @@ function SearchPage() {
         to="/"
         className="inline-flex items-center gap-1.5 rounded-md text-small font-medium text-primary hover:underline"
       >
-        <ArrowLeft aria-hidden="true" className="size-4" /> Home
+        <ArrowLeft aria-hidden="true" className="size-4" /> {t("home")}
       </Link>
       <div className="mt-4">
         <Steps current={1} />
       </div>
-      <h1 className="text-h1">Choose a doctor</h1>
+      <h1 className="text-h1">{t("chooseDoctor")}</h1>
       <p className="mt-1.5 text-body text-muted-foreground">
-        {results.length} {results.length === 1 ? "doctor" : "doctors"} available. Open a profile to see full details.
+        {results.length === 1 ? t("doctorAvailable") : t("doctorsAvailable", { n: results.length })}
       </p>
 
       <form
@@ -75,7 +77,7 @@ function SearchPage() {
         }}
       >
         <label htmlFor="results-search" className="text-small font-semibold">
-          Search doctors or specialties
+          {t("searchLabel")}
         </label>
         <div className="relative mt-1.5">
           <SearchIcon
@@ -87,7 +89,7 @@ function SearchPage() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search doctors or specialties"
+            placeholder={t("searchLabel")}
             className="min-h-12 w-full rounded-md border-2 border-input bg-surface py-3 pr-4 pl-12 text-body hover:border-border-strong focus:border-primary focus:outline-none"
           />
         </div>
@@ -95,7 +97,7 @@ function SearchPage() {
 
       <div className="mt-6 grid gap-4">
         <fieldset>
-          <legend className="text-label text-muted-foreground">Specialty</legend>
+          <legend className="text-label text-muted-foreground">{t("filterSpecialty")}</legend>
           <div className="mt-2 flex flex-wrap gap-2">
             {specialties.map((s) => (
               <Chip
@@ -103,13 +105,13 @@ function SearchPage() {
                 selected={params.specialty === s}
                 onClick={() => setFilter({ specialty: params.specialty === s ? undefined : s })}
               >
-                {s}
+                {td(s)}
               </Chip>
             ))}
           </div>
         </fieldset>
         <fieldset>
-          <legend className="text-label text-muted-foreground">Language</legend>
+          <legend className="text-label text-muted-foreground">{t("filterLanguage")}</legend>
           <div className="mt-2 flex flex-wrap gap-2">
             {languages.map((l) => (
               <Chip
@@ -117,16 +119,16 @@ function SearchPage() {
                 selected={params.language === l}
                 onClick={() => setFilter({ language: params.language === l ? undefined : l })}
               >
-                {l}
+                {td(l)}
               </Chip>
             ))}
           </div>
         </fieldset>
         <fieldset>
-          <legend className="text-label text-muted-foreground">Availability</legend>
+          <legend className="text-label text-muted-foreground">{t("filterAvailability")}</legend>
           <div className="mt-2">
             <Chip selected={!!params.today} onClick={() => setFilter({ today: params.today ? undefined : true })}>
-              Available today
+              {t("availableToday")}
             </Chip>
           </div>
         </fieldset>
@@ -140,9 +142,9 @@ function SearchPage() {
 
       {results.length === 0 && (
         <div className="mt-8 rounded-lg border-2 border-dashed border-border-strong bg-surface p-6">
-          <h2 className="text-h2">No doctors match these filters.</h2>
+          <h2 className="text-h2">{t("noMatchTitle")}</h2>
           <p className="mt-1.5 text-small text-muted-foreground">
-            Try removing a filter — for example, choose a different language or allow any day.
+            {t("noMatchBody")}
           </p>
         </div>
       )}
