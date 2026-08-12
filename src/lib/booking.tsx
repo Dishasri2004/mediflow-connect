@@ -1,14 +1,14 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
 export type Booking = {
-  doctorId?: string;
-  dateKey?: string;
-  slot?: string;
-  fullName?: string;
-  age?: string;
-  phone?: string;
-  reason?: string;
-  appointmentId?: string;
+  doctorId?: string | undefined;
+  dateKey?: string | undefined;
+  slot?: string | undefined;
+  fullName?: string | undefined;
+  age?: string | undefined;
+  phone?: string | undefined;
+  reason?: string | undefined;
+  appointmentId?: string | undefined;
 };
 
 const KEY = "mediflow:booking";

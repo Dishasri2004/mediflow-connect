@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as BookTimeRouteImport } from './routes/book.time'
+import { Route as DoctorsDoctorIdRouteImport } from './routes/doctors.$doctorId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,49 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookTimeRoute = BookTimeRouteImport.update({
+  id: '/book/time',
+  path: '/book/time',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoctorsDoctorIdRoute = DoctorsDoctorIdRouteImport.update({
+  id: '/doctors/$doctorId',
+  path: '/doctors/$doctorId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/book/time': typeof BookTimeRoute
+  '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/book/time': typeof BookTimeRoute
+  '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/book/time': typeof BookTimeRoute
+  '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/search'
+  fullPaths: '/' | '/search' | '/book/time' | '/doctors/$doctorId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/search'
-  id: '__root__' | '/' | '/search'
+  to: '/' | '/search' | '/book/time' | '/doctors/$doctorId'
+  id: '__root__' | '/' | '/search' | '/book/time' | '/doctors/$doctorId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SearchRoute: typeof SearchRoute
+  BookTimeRoute: typeof BookTimeRoute
+  DoctorsDoctorIdRoute: typeof DoctorsDoctorIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/book/time': {
+      id: '/book/time'
+      path: '/book/time'
+      fullPath: '/book/time'
+      preLoaderRoute: typeof BookTimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctors/$doctorId': {
+      id: '/doctors/$doctorId'
+      path: '/doctors/$doctorId'
+      fullPath: '/doctors/$doctorId'
+      preLoaderRoute: typeof DoctorsDoctorIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchRoute: SearchRoute,
+  BookTimeRoute: BookTimeRoute,
+  DoctorsDoctorIdRoute: DoctorsDoctorIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
