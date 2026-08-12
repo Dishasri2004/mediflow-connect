@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppointmentRouteImport } from './routes/appointment'
+import { Route as DesignSystemRouteImport } from './routes/design-system'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as BookDetailsRouteImport } from './routes/book.details'
 import { Route as BookReviewRouteImport } from './routes/book.review'
@@ -19,6 +21,16 @@ import { Route as DoctorsDoctorIdRouteImport } from './routes/doctors.$doctorId'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppointmentRoute = AppointmentRouteImport.update({
+  id: '/appointment',
+  path: '/appointment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesignSystemRoute = DesignSystemRouteImport.update({
+  id: '/design-system',
+  path: '/design-system',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -49,6 +61,8 @@ const DoctorsDoctorIdRoute = DoctorsDoctorIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/appointment': typeof AppointmentRoute
+  '/design-system': typeof DesignSystemRoute
   '/search': typeof SearchRoute
   '/book/details': typeof BookDetailsRoute
   '/book/review': typeof BookReviewRoute
@@ -57,6 +71,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/appointment': typeof AppointmentRoute
+  '/design-system': typeof DesignSystemRoute
   '/search': typeof SearchRoute
   '/book/details': typeof BookDetailsRoute
   '/book/review': typeof BookReviewRoute
@@ -66,6 +82,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/appointment': typeof AppointmentRoute
+  '/design-system': typeof DesignSystemRoute
   '/search': typeof SearchRoute
   '/book/details': typeof BookDetailsRoute
   '/book/review': typeof BookReviewRoute
@@ -76,6 +94,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/appointment'
+    | '/design-system'
     | '/search'
     | '/book/details'
     | '/book/review'
@@ -84,6 +104,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/appointment'
+    | '/design-system'
     | '/search'
     | '/book/details'
     | '/book/review'
@@ -92,6 +114,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/appointment'
+    | '/design-system'
     | '/search'
     | '/book/details'
     | '/book/review'
@@ -101,6 +125,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppointmentRoute: typeof AppointmentRoute
+  DesignSystemRoute: typeof DesignSystemRoute
   SearchRoute: typeof SearchRoute
   BookDetailsRoute: typeof BookDetailsRoute
   BookReviewRoute: typeof BookReviewRoute
@@ -115,6 +141,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/appointment': {
+      id: '/appointment'
+      path: '/appointment'
+      fullPath: '/appointment'
+      preLoaderRoute: typeof AppointmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/design-system': {
+      id: '/design-system'
+      path: '/design-system'
+      fullPath: '/design-system'
+      preLoaderRoute: typeof DesignSystemRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search': {
@@ -157,6 +197,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppointmentRoute: AppointmentRoute,
+  DesignSystemRoute: DesignSystemRoute,
   SearchRoute: SearchRoute,
   BookDetailsRoute: BookDetailsRoute,
   BookReviewRoute: BookReviewRoute,
