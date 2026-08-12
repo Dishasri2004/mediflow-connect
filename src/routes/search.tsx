@@ -6,14 +6,19 @@ import { DoctorCard } from "@/components/mf/DoctorCard";
 import { Steps } from "@/components/mf/Steps";
 import { doctors, languages, specialties, type Specialty } from "@/lib/doctors";
 
-type SearchParams = { q?: string; specialty?: string; language?: string; today?: boolean };
+type SearchParams = {
+  q?: string | undefined;
+  specialty?: string | undefined;
+  language?: string | undefined;
+  today?: boolean | undefined;
+};
 
 export const Route = createFileRoute("/search")({
   validateSearch: (search: Record<string, unknown>): SearchParams => ({
-    q: typeof search.q === "string" ? search.q : undefined,
-    specialty: typeof search.specialty === "string" ? search.specialty : undefined,
-    language: typeof search.language === "string" ? search.language : undefined,
-    today: search.today === true || search.today === "true" ? true : undefined,
+    q: typeof search["q"] === "string" ? search["q"] : undefined,
+    specialty: typeof search["specialty"] === "string" ? search["specialty"] : undefined,
+    language: typeof search["language"] === "string" ? search["language"] : undefined,
+    today: search["today"] === true || search["today"] === "true" ? true : undefined,
   }),
   head: () => ({
     meta: [
