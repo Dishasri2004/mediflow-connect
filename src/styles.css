@@ -107,13 +107,13 @@
 
 /* Typography styles (Figma text styles) */
 @utility text-display {
-  font-size: 2.25rem;
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
   line-height: 1.08;
   font-weight: 700;
   letter-spacing: -0.03em;
 }
 @utility text-h1 {
-  font-size: 1.625rem;
+  font-size: clamp(1.625rem, 3.4vw, 2rem);
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -140,15 +140,6 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-}
-
-@media (min-width: 768px) {
-  @utility text-display {
-    font-size: 3.25rem;
-  }
-  @utility text-h1 {
-    font-size: 2rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
