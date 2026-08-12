@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppointmentRouteImport } from './routes/appointment'
+import { Route as DesignSystemRouteImport } from './routes/design-system'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as BookDetailsRouteImport } from './routes/book.details'
+import { Route as BookReviewRouteImport } from './routes/book.review'
+import { Route as BookTimeRouteImport } from './routes/book.time'
+import { Route as DoctorsDoctorIdRouteImport } from './routes/doctors.$doctorId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppointmentRoute = AppointmentRouteImport.update({
+  id: '/appointment',
+  path: '/appointment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesignSystemRoute = DesignSystemRouteImport.update({
+  id: '/design-system',
+  path: '/design-system',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookDetailsRoute = BookDetailsRouteImport.update({
+  id: '/book/details',
+  path: '/book/details',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookReviewRoute = BookReviewRouteImport.update({
+  id: '/book/review',
+  path: '/book/review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookTimeRoute = BookTimeRouteImport.update({
+  id: '/book/time',
+  path: '/book/time',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoctorsDoctorIdRoute = DoctorsDoctorIdRouteImport.update({
+  id: '/doctors/$doctorId',
+  path: '/doctors/$doctorId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/appointment': typeof AppointmentRoute
+  '/design-system': typeof DesignSystemRoute
+  '/search': typeof SearchRoute
+  '/book/details': typeof BookDetailsRoute
+  '/book/review': typeof BookReviewRoute
+  '/book/time': typeof BookTimeRoute
+  '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/appointment': typeof AppointmentRoute
+  '/design-system': typeof DesignSystemRoute
+  '/search': typeof SearchRoute
+  '/book/details': typeof BookDetailsRoute
+  '/book/review': typeof BookReviewRoute
+  '/book/time': typeof BookTimeRoute
+  '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/appointment': typeof AppointmentRoute
+  '/design-system': typeof DesignSystemRoute
+  '/search': typeof SearchRoute
+  '/book/details': typeof BookDetailsRoute
+  '/book/review': typeof BookReviewRoute
+  '/book/time': typeof BookTimeRoute
+  '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/appointment'
+    | '/design-system'
+    | '/search'
+    | '/book/details'
+    | '/book/review'
+    | '/book/time'
+    | '/doctors/$doctorId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/appointment'
+    | '/design-system'
+    | '/search'
+    | '/book/details'
+    | '/book/review'
+    | '/book/time'
+    | '/doctors/$doctorId'
+  id:
+    | '__root__'
+    | '/'
+    | '/appointment'
+    | '/design-system'
+    | '/search'
+    | '/book/details'
+    | '/book/review'
+    | '/book/time'
+    | '/doctors/$doctorId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppointmentRoute: typeof AppointmentRoute
+  DesignSystemRoute: typeof DesignSystemRoute
+  SearchRoute: typeof SearchRoute
+  BookDetailsRoute: typeof BookDetailsRoute
+  BookReviewRoute: typeof BookReviewRoute
+  BookTimeRoute: typeof BookTimeRoute
+  DoctorsDoctorIdRoute: typeof DoctorsDoctorIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/appointment': {
+      id: '/appointment'
+      path: '/appointment'
+      fullPath: '/appointment'
+      preLoaderRoute: typeof AppointmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/design-system': {
+      id: '/design-system'
+      path: '/design-system'
+      fullPath: '/design-system'
+      preLoaderRoute: typeof DesignSystemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book/details': {
+      id: '/book/details'
+      path: '/book/details'
+      fullPath: '/book/details'
+      preLoaderRoute: typeof BookDetailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book/review': {
+      id: '/book/review'
+      path: '/book/review'
+      fullPath: '/book/review'
+      preLoaderRoute: typeof BookReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book/time': {
+      id: '/book/time'
+      path: '/book/time'
+      fullPath: '/book/time'
+      preLoaderRoute: typeof BookTimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctors/$doctorId': {
+      id: '/doctors/$doctorId'
+      path: '/doctors/$doctorId'
+      fullPath: '/doctors/$doctorId'
+      preLoaderRoute: typeof DoctorsDoctorIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppointmentRoute: AppointmentRoute,
+  DesignSystemRoute: DesignSystemRoute,
+  SearchRoute: SearchRoute,
+  BookDetailsRoute: BookDetailsRoute,
+  BookReviewRoute: BookReviewRoute,
+  BookTimeRoute: BookTimeRoute,
+  DoctorsDoctorIdRoute: DoctorsDoctorIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
