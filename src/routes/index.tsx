@@ -26,17 +26,17 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { t } = useLang();
+  const { t, td } = useLang();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-16">
       <section>
-        <p className="text-label text-primary">Appointment booking concept</p>
-        <h1 className="mt-3 max-w-2xl text-display">Find the right care, without the confusion.</h1>
+        <p className="text-label text-primary">{t("homeEyebrow")}</p>
+        <h1 className="mt-3 max-w-2xl text-display">{t("homeTitle")}</h1>
         <p className="mt-4 max-w-xl text-body text-muted-foreground">
-          Find a doctor and choose a convenient appointment time in a few simple steps.
+          {t("homeSubtitle")}
         </p>
 
         <form
@@ -47,7 +47,7 @@ function Home() {
           }}
         >
           <label htmlFor="home-search" className="text-small font-semibold">
-            Search doctors or specialties
+            {t("searchLabel")}
           </label>
           <div className="mt-1.5 flex flex-col gap-3 sm:flex-row">
             <div className="relative flex-1">
@@ -60,7 +60,7 @@ function Home() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search doctors or specialties"
+                placeholder={t("searchLabel")}
                 className="min-h-13 w-full rounded-md border-2 border-input bg-surface py-3 pr-4 pl-12 text-body placeholder:text-muted-foreground/80 hover:border-border-strong focus:border-primary focus:outline-none"
               />
             </div>
@@ -71,11 +71,11 @@ function Home() {
         </form>
 
         <div className="mt-8">
-          <h2 className="text-label text-muted-foreground">Or choose a specialty</h2>
+          <h2 className="text-label text-muted-foreground">{t("orChooseSpecialty")}</h2>
           <ul className="mt-3 flex flex-wrap gap-2">
             {specialties.map((s) => (
               <li key={s}>
-                <Chip onClick={() => navigate({ to: "/search", search: { specialty: s } })}>{s}</Chip>
+                <Chip onClick={() => navigate({ to: "/search", search: { specialty: s } })}>{td(s)}</Chip>
               </li>
             ))}
           </ul>
@@ -83,23 +83,23 @@ function Home() {
       </section>
 
       <section className="mt-14 border-t border-border pt-8">
-        <h2 className="text-h1">How this concept is designed</h2>
+        <h2 className="text-h1">{t("howDesigned")}</h2>
         <ul className="mt-5 grid gap-4 sm:grid-cols-3">
           {[
             {
               icon: MousePointerClick,
-              title: "One action per screen",
-              body: "Each step has a single clear next step, so people always know what to do next.",
+              title: t("hcd1Title"),
+              body: t("hcd1Body"),
             },
             {
               icon: Type,
-              title: "Plain language",
-              body: "Labels and errors describe what happened and how to fix it, without medical jargon.",
+              title: t("hcd2Title"),
+              body: t("hcd2Body"),
             },
             {
               icon: ShieldCheck,
-              title: "Accessible by default",
-              body: "Keyboard focus, large touch targets, readable type and no colour-only signals.",
+              title: t("hcd3Title"),
+              body: t("hcd3Body"),
             },
           ].map(({ icon: Icon, title, body }) => (
             <li key={title} className="rounded-lg border border-border bg-card p-5 shadow-card">
@@ -110,9 +110,9 @@ function Home() {
           ))}
         </ul>
         <p className="mt-6 text-small text-muted-foreground">
-          MediFlow is a design concept with fictional data.{" "}
+          {t("conceptNote")}{" "}
           <Link to="/design-system" className="font-semibold text-primary underline underline-offset-4">
-            Read the design system and research notes
+            {t("readDesignNotes")}
           </Link>
           .
         </p>

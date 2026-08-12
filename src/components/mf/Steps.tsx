@@ -8,9 +8,9 @@ export function Steps({ current }: { current: 1 | 2 | 3 | 4 }) {
   const steps = [t("stepDoctor"), t("stepTime"), t("stepDetails"), t("stepConfirm")];
 
   return (
-    <nav aria-label="Booking progress" className="mb-6">
+    <nav aria-label={t("bookingProgress")} className="mb-6">
       <p className="sr-only">
-        Step {current} of 4: {steps[current - 1]}
+        {t("stepOf", { n: current })}: {steps[current - 1]}
       </p>
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-2">
         {steps.map((label, i) => {
