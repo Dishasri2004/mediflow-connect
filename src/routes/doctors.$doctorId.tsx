@@ -35,7 +35,7 @@ export const Route = createFileRoute("/doctors/$doctorId")({
 function DoctorProfile() {
   const { doctor } = Route.useLoaderData();
   const { update } = useBooking();
-  const { t } = useLang();
+  const { t, td, lang } = useLang();
   const navigate = useNavigate();
   const Icon = doctor.consultation === "Video consultation" ? Video : MapPin;
 
@@ -45,7 +45,7 @@ function DoctorProfile() {
         to="/search"
         className="inline-flex items-center gap-1.5 rounded-md text-small font-medium text-primary hover:underline"
       >
-        <ArrowLeft aria-hidden="true" className="size-4" /> Back to doctors
+        <ArrowLeft aria-hidden="true" className="size-4" /> {t("backToDoctors")}
       </Link>
       <div className="mt-4">
         <Steps current={1} />
@@ -61,7 +61,7 @@ function DoctorProfile() {
         <div className="min-w-0">
           <h1 className="text-h1">{doctor.name}</h1>
           <p className="mt-1 text-body text-muted-foreground">
-            {doctor.specialty} · {doctor.experience} years experience
+            {td(doctor.specialty)} · {doctor.experience} {t("yearsExperience")}
           </p>
         </div>
       </header>
@@ -70,54 +70,54 @@ function DoctorProfile() {
         <div className="flex items-start gap-2">
           <Languages aria-hidden="true" className="mt-1 size-4 shrink-0 text-muted-foreground" />
           <div>
-            <dt className="text-label text-muted-foreground">Languages</dt>
-            <dd className="mt-0.5">{doctor.languages.join(" · ")}</dd>
+            <dt className="text-label text-muted-foreground">{t("languagesLabel")}</dt>
+            <dd className="mt-0.5">{doctor.languages.map((l) => td(l)).join(" · ")}</dd>
           </div>
         </div>
         <div className="flex items-start gap-2">
           <Icon aria-hidden="true" className="mt-1 size-4 shrink-0 text-muted-foreground" />
           <div>
-            <dt className="text-label text-muted-foreground">How the consultation happens</dt>
-            <dd className="mt-0.5">{doctor.consultation}</dd>
+            <dt className="text-label text-muted-foreground">{t("howConsultation")}</dt>
+            <dd className="mt-0.5">{td(doctor.consultation)}</dd>
           </div>
         </div>
         <div className="flex items-start gap-2">
           <IndianRupee aria-hidden="true" className="mt-1 size-4 shrink-0 text-muted-foreground" />
           <div>
-            <dt className="text-label text-muted-foreground">Consultation fee</dt>
+            <dt className="text-label text-muted-foreground">{t("consultationFee")}</dt>
             <dd className="mt-0.5">₹{doctor.fee}</dd>
           </div>
         </div>
         <div className="flex items-start gap-2">
           <Clock aria-hidden="true" className="mt-1 size-4 shrink-0 text-muted-foreground" />
           <div>
-            <dt className="text-label text-muted-foreground">Next available</dt>
+            <dt className="text-label text-muted-foreground">{t("nextAvailable")}</dt>
             <dd className="mt-1">
-              <Badge tone="success">{doctor.nextAvailable}</Badge>
+              <Badge tone="success">{td(doctor.nextAvailable)}</Badge>
             </dd>
           </div>
         </div>
       </dl>
 
       <section className="mt-8">
-        <h2 className="text-h2">About {doctor.name.split(" ")[1]}</h2>
-        <p className="mt-2 max-w-prose text-body text-muted-foreground">{doctor.bio}</p>
+        <h2 className="text-h2">{t("about")}</h2>
+        <p className="mt-2 max-w-prose text-body text-muted-foreground">{lang === "hi" ? doctor.bioHi : doctor.bio}</p>
       </section>
 
       <section className="mt-8">
-        <h2 className="text-h2">Usual appointment times</h2>
+        <h2 className="text-h2">{t("usualTimes")}</h2>
         <ul className="mt-3 flex flex-wrap gap-2">
           {timeSlots.map((slot) => (
             <li
               key={slot}
               className="rounded-2xl border border-border bg-surface px-3 py-1.5 text-small text-muted-foreground"
             >
-              {slot}
+              {td(slot)}
             </li>
           ))}
         </ul>
         <p className="mt-2 text-small text-muted-foreground">
-          You will pick an exact date and time on the next screen.
+          {t("usualTimesNote")}
         </p>
       </section>
 

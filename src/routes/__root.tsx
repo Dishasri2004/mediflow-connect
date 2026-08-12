@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "../components/mf/SiteHeader";
-import { LanguageProvider } from "../lib/i18n";
+import { LanguageProvider, useLang } from "../lib/i18n";
 import { BookingProvider } from "../lib/booking";
 
 function NotFoundComponent() {
@@ -119,6 +119,29 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function SkipLink() {
+  const { t } = useLang();
+  return (
+    <a
+      href="#main"
+      className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+    >
+      {t("skipToMain")}
+    </a>
+  );
+}
+
+function SiteFooter() {
+  const { t } = useLang();
+  return (
+    <footer className="mt-16 border-t border-border bg-surface">
+      <div className="mx-auto max-w-5xl px-4 py-8 text-small text-muted-foreground sm:px-6">
+        <p>{t("disclaimer")}</p>
+      </div>
+    </footer>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
@@ -126,25 +149,13 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <BookingProvider>
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-          >
-            Skip to main content
-          </a>
+          <SkipLink />
           <SiteHeader />
           <main id="main">
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
           </main>
-          <footer className="mt-16 border-t border-border bg-surface">
-            <div className="mx-auto max-w-5xl px-4 py-8 text-small text-muted-foreground sm:px-6">
-              <p>
-                MediFlow is a UX / human-centered design concept built for a portfolio. Doctors, availability and
-                appointments are fictional. No real patient research is represented and the product is not deployed.
-              </p>
-            </div>
-          </footer>
+          <SiteFooter />
         </BookingProvider>
       </LanguageProvider>
     </QueryClientProvider>

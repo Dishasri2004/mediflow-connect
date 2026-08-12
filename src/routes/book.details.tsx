@@ -34,11 +34,11 @@ function DetailsPage() {
     const phone = (booking.phone ?? "").replace(/\s/g, "");
     const reason = (booking.reason ?? "").trim();
 
-    if (name.length < 2) next.fullName = "Enter the patient's full name, as you would like it on the appointment.";
+    if (name.length < 2) next.fullName = t("errName");
     if (!/^\d{1,3}$/.test(age) || Number(age) < 1 || Number(age) > 120)
-      next.age = "Enter an age between 1 and 120, in numbers.";
-    if (!/^\d{10}$/.test(phone)) next.phone = "Enter a 10-digit phone number, without spaces or country code.";
-    if (reason.length < 3) next.reason = "Tell us briefly why you want to see the doctor, for example “skin rash”.";
+      next.age = t("errAge");
+    if (!/^\d{10}$/.test(phone)) next.phone = t("errPhone");
+    if (reason.length < 3) next.reason = t("errReason");
     return next;
   }
 
@@ -48,20 +48,20 @@ function DetailsPage() {
         to="/book/time"
         className="inline-flex items-center gap-1.5 rounded-md text-small font-medium text-primary hover:underline"
       >
-        <ArrowLeft aria-hidden="true" className="size-4" /> Back to date and time
+        <ArrowLeft aria-hidden="true" className="size-4" /> {t("backToDateTime")}
       </Link>
       <div className="mt-4">
         <Steps current={3} />
       </div>
 
-      <h1 className="text-h1">Who is this appointment for?</h1>
+      <h1 className="text-h1">{t("detailsTitle")}</h1>
       <p className="mt-1.5 text-body text-muted-foreground">
-        Four short questions. You can book for yourself or for someone else.
+        {t("detailsSubtitle")}
       </p>
 
       <p className="mt-5 flex items-start gap-2 rounded-md border border-border bg-primary-soft/60 p-3 text-small">
         <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-primary" />
-        <span>Your answers are saved on this device as you type, so nothing is lost if you get interrupted.</span>
+        <span>{t("savedNote")}</span>
       </p>
 
       <form
@@ -75,7 +75,7 @@ function DetailsPage() {
         }}
       >
         <Field
-          label="Full name"
+          label={t("fullName")}
           error={errors.fullName}
           inputProps={{
             value: booking.fullName ?? "",
@@ -85,8 +85,8 @@ function DetailsPage() {
           }}
         />
         <Field
-          label="Age"
-          hint="In years."
+          label={t("age")}
+          hint={t("ageHint")}
           error={errors.age}
           inputProps={{
             value: booking.age ?? "",
@@ -97,7 +97,7 @@ function DetailsPage() {
         />
         <Field
           label="Phone number"
-          hint="We use this only to confirm the appointment."
+          hint={t("phoneHint")}
           error={errors.phone}
           inputProps={{
             value: booking.phone ?? "",
@@ -105,12 +105,12 @@ function DetailsPage() {
             inputMode: "tel",
             autoComplete: "tel",
             name: "phone",
-            placeholder: "10-digit number",
+            placeholder: t("phonePlaceholder"),
           }}
         />
         <Field
-          label="Reason for visit"
-          hint="A few words are enough."
+          label={t("reason")}
+          hint={t("reasonHint")}
           error={errors.reason}
           textarea
           textareaProps={{
