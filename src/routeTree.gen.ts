@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as BookDetailsRouteImport } from './routes/book.details'
+import { Route as BookReviewRouteImport } from './routes/book.review'
 import { Route as BookTimeRouteImport } from './routes/book.time'
 import { Route as DoctorsDoctorIdRouteImport } from './routes/doctors.$doctorId'
 
@@ -22,6 +24,16 @@ const IndexRoute = IndexRouteImport.update({
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookDetailsRoute = BookDetailsRouteImport.update({
+  id: '/book/details',
+  path: '/book/details',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookReviewRoute = BookReviewRouteImport.update({
+  id: '/book/review',
+  path: '/book/review',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookTimeRoute = BookTimeRouteImport.update({
@@ -38,12 +50,16 @@ const DoctorsDoctorIdRoute = DoctorsDoctorIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/book/details': typeof BookDetailsRoute
+  '/book/review': typeof BookReviewRoute
   '/book/time': typeof BookTimeRoute
   '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/book/details': typeof BookDetailsRoute
+  '/book/review': typeof BookReviewRoute
   '/book/time': typeof BookTimeRoute
   '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
@@ -51,20 +67,43 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
+  '/book/details': typeof BookDetailsRoute
+  '/book/review': typeof BookReviewRoute
   '/book/time': typeof BookTimeRoute
   '/doctors/$doctorId': typeof DoctorsDoctorIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/search' | '/book/time' | '/doctors/$doctorId'
+  fullPaths:
+    | '/'
+    | '/search'
+    | '/book/details'
+    | '/book/review'
+    | '/book/time'
+    | '/doctors/$doctorId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/search' | '/book/time' | '/doctors/$doctorId'
-  id: '__root__' | '/' | '/search' | '/book/time' | '/doctors/$doctorId'
+  to:
+    | '/'
+    | '/search'
+    | '/book/details'
+    | '/book/review'
+    | '/book/time'
+    | '/doctors/$doctorId'
+  id:
+    | '__root__'
+    | '/'
+    | '/search'
+    | '/book/details'
+    | '/book/review'
+    | '/book/time'
+    | '/doctors/$doctorId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SearchRoute: typeof SearchRoute
+  BookDetailsRoute: typeof BookDetailsRoute
+  BookReviewRoute: typeof BookReviewRoute
   BookTimeRoute: typeof BookTimeRoute
   DoctorsDoctorIdRoute: typeof DoctorsDoctorIdRoute
 }
@@ -83,6 +122,20 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book/details': {
+      id: '/book/details'
+      path: '/book/details'
+      fullPath: '/book/details'
+      preLoaderRoute: typeof BookDetailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book/review': {
+      id: '/book/review'
+      path: '/book/review'
+      fullPath: '/book/review'
+      preLoaderRoute: typeof BookReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/book/time': {
@@ -105,6 +158,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchRoute: SearchRoute,
+  BookDetailsRoute: BookDetailsRoute,
+  BookReviewRoute: BookReviewRoute,
   BookTimeRoute: BookTimeRoute,
   DoctorsDoctorIdRoute: DoctorsDoctorIdRoute,
 }

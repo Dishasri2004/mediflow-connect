@@ -4,11 +4,11 @@ import { cn } from "@/lib/utils";
 
 type FieldProps = {
   label: string;
-  hint?: string;
-  error?: string;
-  inputProps?: React.ComponentProps<"input">;
-  textarea?: boolean;
-  textareaProps?: React.ComponentProps<"textarea">;
+  hint?: string | undefined;
+  error?: string | undefined;
+  inputProps?: React.ComponentProps<"input"> | undefined;
+  textarea?: boolean | undefined;
+  textareaProps?: React.ComponentProps<"textarea"> | undefined;
 };
 
 /** Input / Textarea with label, hint, and an error state that is not colour-only. */
